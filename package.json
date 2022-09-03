@@ -1,0 +1,23 @@
+{
+  "name": "merlinideasbot",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "@Ekpy",
+  "license": "ISC",
+  "devDependencies": {
+    "eslint": "^8.23.0"
+  },
+  "dependencies": {
+    "@discordjs/rest": "^1.1.0",
+    "discord.js": "^14.3.0",
+    "https": "^1.0.0",
+    "jquery": "^3.6.1",
+    "jsdom": "^20.0.0",
+    "request": "^2.88.2"
+  }
+}
