@@ -61,7 +61,7 @@ function createTeams(players, numTeams) {
     for (let i = 0; i < output.length; i++) {
         output[i] = new Array();
     }
-
+    
     let teamIndex = 0;
     for (let i = 0; i < players.length; i++) {
         output[teamIndex].push(tempArray.pop());
