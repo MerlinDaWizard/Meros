@@ -3,6 +3,7 @@ const fs = require('node:fs');
 const path = require('node:path');
 const { Client, Collection, GatewayIntentBits } = require('discord.js');
 const { token } = require('./config.json');
+const { execute } = require('./commands/speak');
 
 const client = new Client({ intents: [GatewayIntentBits.Guilds, GatewayIntentBits.GuildMessages, GatewayIntentBits.MessageContent, GatewayIntentBits.GuildMembers, GatewayIntentBits.GuildVoiceStates] });
 
@@ -36,4 +37,46 @@ client.on('interactionCreate', async interaction => {
 	}
 });
 
+
+client.on('messageCreate', async message => {
+	const prefix = get_prefix(message);
+    if (!message.content.startsWith(prefix)) return; 
+    if (!message.member) message.member = await message.guild.fetchMember(message);
+
+    const args = message.content.slice(prefix.length).trim();
+
+	message.channel.send('You typed: ' + args);
+	const speak = require('./speakPrefix.js');
+	speak.func(message, args);
+
+});
+
+
 client.login(token);
+
+function get_prefix(message) {
+	const { pathToGuildData } = require('./config.json');
+	const pathData = path.join(__dirname, pathToGuildData);
+	const rawdata = fs.readFileSync(pathData);
+	const userData = JSON.parse(rawdata);
+	if (!userData[message.guildId]) {
+		set_prefix(message.guildId);
+	}
+	else {return userData[message.guildId].prefix;}
+}
+
+function set_prefix(guildID) {
+	const { pathToGuildData } = require('./config.json');
+	const pathToFile = path.join(__dirname, pathToGuildData);
+	const rawdata = fs.readFileSync(pathToFile);
+	const dataJson = JSON.parse(rawdata);
+
+	dataJson[guildID] = {
+		prefix: '-',
+	};
+
+	fs.writeFile(pathToFile, JSON.stringify (dataJson, null, 4), err => {
+		if (err) throw err;
+		console.log('Sucesfully updated ', guildID);
+	});
+}
