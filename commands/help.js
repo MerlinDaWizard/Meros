@@ -71,6 +71,7 @@ module.exports = {
                 { name: '/uber', value: 'Utilize UberDucks deepfake text to speech to imitate people' },
                 { name: '/celeste', value: 'Get the current price of :star: Celeste :star:  on steam and if they are on sale' },
                 { name: '/ping', value: 'Says "Pong!" back.' },
+                { name: '/oneshot', value: 'Get the price of the hit game :yellow_heart: Oneshot :yellow_heart: . You should fucking buy it play it. Who does gets Meros Premium' },
                 { name: '/chair', value: 'A nice chair' },
                 { name: '\u200B', value: '\u200B' },
             )
