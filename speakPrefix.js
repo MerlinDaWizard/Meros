@@ -20,6 +20,11 @@ module.exports = {
 		// Get voice channel id and check if they are in one
 		const voiceChannel = message.member.voice.channelId;
 		if (!voiceChannel) return;
+        if(isEmptyOrSpaces(speech)){
+    		// error 
+            message.channel.send('Please stop trying to break me ;-;'); 
+			return;
+        }
 
 		// Create voiceConnection
 		const VoiceConnection = joinVoiceChannel({
@@ -80,4 +85,8 @@ function CheckPreference(id) {
 		return 'en';
 	}
 	else {return userData[id].ttsLanguage;}
+}
+
+function isEmptyOrSpaces(str){
+    return str === null || str.match(/^ *$/) !== null;
 }
