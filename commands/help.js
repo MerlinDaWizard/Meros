@@ -73,6 +73,7 @@ module.exports = {
                 { name: '/ping', value: 'Says "Pong!" back.' },
                 { name: '/qoute', value: 'The qoute game! Finish the qoute, and dont gain any points' },
                 { name: '/oneshot', value: 'Get the price of the hit game :yellow_heart: Oneshot :yellow_heart: . You should fucking buy it play it. Who does gets Meros Premium' },
+                { name: '/cricket', value: 'Joins the channel, to play a cricket sound. For when a joke just does not land.' },
                 { name: '/chair', value: 'A nice chair' },
                 { name: '\u200B', value: '\u200B' },
                 { name: 'Context Menu', value: 'You get to these commands by right clicking a person and picking Apps' },
