@@ -7,7 +7,7 @@ const { createAudioPlayer, joinVoiceChannel, AudioPlayerStatus, NoSubscriberBeha
 // const fs = require('fs');
 const axios = require('axios');
 const { uberDuckAPIPublic, uberDuckAPISecret } = require('../config.json');
-
+const {createReadStream } = require('fs')
 let leaveTimer = null;
 
 module.exports = {
@@ -85,6 +85,7 @@ module.exports = {
 			await interaction.editReply('Error in creating UberDuck sound. Try again later');
 			return; 
 		}
+        await new Promise(r => setTimeout(r, 5000));
 		// console.log(generateDependencyReport());
 
 		// Get voice channel id and check if they are in one
@@ -101,10 +102,16 @@ module.exports = {
 			guildId: interaction.guildId, // the guild that the channel is in
 			adapterCreator: interaction.guild.voiceAdapterCreator, // and setting the voice adapter creator
 		});
+        
+        console.log(link);
+        const response = await axios.get(link, {
+    		responseType: 'stream'
+		});
 
+		const stream = response.data;
 		const audioPlayer = createAudioPlayer();
-		const resource = createAudioResource(link);
-
+		const resource = createAudioResource(stream);
+		//console.log(resource);
 
 		// ==========Events
 		audioPlayer.on(AudioPlayerStatus.Playing, () => {
@@ -125,7 +132,7 @@ module.exports = {
 		});
 
 		audioPlayer.on('error', error => {
-			console.error('Error:', error.message, 'with track', error.resource.metadata.title);
+			console.error('Error:', error.message, 'with uberduck tts');
 		});
 
 
