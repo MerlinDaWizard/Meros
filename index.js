@@ -45,10 +45,17 @@ client.on('interactionCreate', async interaction => {
 
 client.on('messageCreate', async message => {
 	const prefix = get_prefix(message);
-    if (!message.content.startsWith(prefix)) return; 
+    let extra_length = 0;
+    if (message.content.startsWith("\\"+prefix)) {
+        extra_length = 1
+    } else {
+         if (!message.content.startsWith(prefix)) return;
+    }
+    // if (!message.content.startsWith(prefix)) return; 
+    
     if (!message.member) message.member = await message.guild.fetchMember(message);
 
-    const args = message.content.slice(prefix.length).trim();
+    const args = message.content.slice(extra_length+prefix.length).trim();
 
 	message.channel.send('You typed: ' + args);
 	const speak = require('./speakPrefix.js');
