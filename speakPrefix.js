@@ -19,10 +19,7 @@ module.exports = {
 
 		// Get voice channel id and check if they are in one
 		const voiceChannel = message.member.voice.channelId;
-		if (!voiceChannel) {
-			message.channel.send('Please join a voice channel.'); 
-			return;
-		}
+		if (!voiceChannel) return;
 
 		// Create voiceConnection
 		const VoiceConnection = joinVoiceChannel({
