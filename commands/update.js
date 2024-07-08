@@ -42,40 +42,34 @@ const items = ['https://external-preview.redd.it/1Ue9d7ASCGBH7RHliUxmiPCEezJyVR3
 
 module.exports = {
 	data: new SlashCommandBuilder()
-		.setName('help')
-		.setDescription('Tells about my features!'),
+		.setName('update')
+		.setDescription('Tells about my newest features!'),
 	async execute(interaction) {
 
-        const { pathToGuildData } = require('../config.json');
+        /* const { pathToGuildData } = require('../config.json');
         const pathData = path.join(__dirname, '..', pathToGuildData);
         const rawdata = fs.readFileSync(pathData);
         const userData = JSON.parse(rawdata);
-        const prefix = userData[interaction.guildId].prefix;
+        const prefix = userData[interaction.guildId].prefix;*/
+
+        const pathData = path.join(__dirname, '..', 'package.json');
+        const rawdata = fs.readFileSync(pathData);
+        const userData = JSON.parse(rawdata);
+        const update = userData.version;
 
         const image = items[Math.floor(Math.random() * items.length)];
         
         const exampleEmbed = new EmbedBuilder()
             .setColor(0x0099FF)
-            .setTitle('The Help Embed :new_moon_with_face: ')
-            .setAuthor({ name: 'LW Bot', iconURL: 'https://cdn.discordapp.com/attachments/406114988504252419/1021536066878054420/Meros_Artistic.png' })
-            .setDescription('A text to speech program utilising discord.js, gTTS and UberDuck API + some other random commands')
+            .setTitle('The Update Embed :chart_with_upwards_trend: Version ' + update)
+            .setAuthor({ name: 'Meros', iconURL: 'https://cdn.discordapp.com/attachments/406114988504252419/1021536066878054420/Meros_Artistic.png' })
             .setThumbnail(image)
             .addFields(
                 { name: '\u200B', value: '\u200B' },
-                { name: '/help', value: 'Brings this menu up ' },
-                { name: '/speak', value: 'The bots transfers inputted text into a beautiful voice' },
-                { name: '`' + prefix + '`', value: 'Same as /speak, but no need for slash commands. Old way of commands' },
-                { name: '/changevoice', value: 'Change the nationality of the beautiful voice. Sets it per user' },
-                { name: '/prefix', value: 'Change the text prefix. Sets it per server' },
-                { name: '/team', value: 'Insert names seperated by ` , ` and number of teams, to get a random assortment of teams.' },
-                { name: '/uber', value: 'Utilize UberDucks deepfake text to speech to imitate people' },
-                { name: '/celeste', value: 'Get the current price of :star: Celeste :star:  on steam and if they are on sale' },
-                { name: '/ping', value: 'Says "Pong!" back.' },
-                { name: '/update', value: 'Brings tge update menu up' },
+                { name: '/update', value: 'Brings this menu up, shut up its a new feature I fucken swear' },
                 { name: '/qoute', value: 'The qoute game! Finish the qoute, and dont gain any points' },
                 { name: '/oneshot', value: 'Get the price of the hit game :yellow_heart: Oneshot :yellow_heart: . You should fucking buy it play it. Who does gets Meros Premium' },
                 { name: '/howoldisminecraft', value: 'Input a valid minecraft update, to find out how old it is' },
-                { name: '/cricket', value: 'Joins the channel, to play a cricket sound. For when a joke just does not land.' },
                 { name: '/chair', value: 'A nice chair' },
                 { name: '\u200B', value: '\u200B' },
                 { name: 'Context Menu', value: 'You get to these commands by right clicking a person and picking Apps' },
