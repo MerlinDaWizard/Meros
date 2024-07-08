@@ -52,7 +52,7 @@ module.exports = {
 			leaveTimer = setTimeout(() => {
 			message.channel.send('Idling too long bye. :wave: ');
 			VoiceConnection.disconnect();
-			}, 2 * 60 * 1000);
+			}, 10 * 60 * 1000);
 		});
 
 		audioPlayer.on('error', error => {
