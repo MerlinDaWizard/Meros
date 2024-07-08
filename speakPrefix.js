@@ -21,6 +21,10 @@ module.exports = {
 		const voiceChannel = message.member.voice.channelId;
 		if (!voiceChannel) return;
         if (isEmptyOrSpaces(speech)) return;
+        if (voiceChannel == 952643811606155334) {
+          message.channel.send("I dont support activision blizzard");
+          return;
+    	}
 
 		// Create voiceConnection
 		const VoiceConnection = joinVoiceChannel({

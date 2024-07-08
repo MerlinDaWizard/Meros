@@ -31,7 +31,12 @@ module.exports = {
 			await interaction.reply('Please join a voice channel.'); 
 			return;
 		}
-
+        
+       //Check If they support activison blizzard
+       if (voiceChannel == 952643811606155334) {
+          await interaction.reply("I dont support activision blizzard");
+          return;
+        }
 		// Create voiceConnection
 		const VoiceConnection = joinVoiceChannel({
 			channelId: voiceChannel, // the voice channel's id
