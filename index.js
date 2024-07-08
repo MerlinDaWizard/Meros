@@ -19,6 +19,11 @@ for (const file of commandFiles) {
 
 client.once('ready', () => {
 	console.log(`Ready Freddy Spagheti! Logged in as ${client.user.tag}`);
+    
+    client.user.setPresence({
+      activities: [{ name: `the robo fish wars`, type: ActivityType.Competing }],
+      status: 'online',
+    });
 });
 
 client.on('interactionCreate', async interaction => {
