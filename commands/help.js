@@ -71,8 +71,12 @@ module.exports = {
                 { name: '/uber', value: 'Utilize UberDucks deepfake text to speech to imitate people' },
                 { name: '/celeste', value: 'Get the current price of :star: Celeste :star:  on steam and if they are on sale' },
                 { name: '/ping', value: 'Says "Pong!" back.' },
+                { name: '/qoute', value: 'The qoute game! Finish the qoute, and dont gain any points' },
                 { name: '/oneshot', value: 'Get the price of the hit game :yellow_heart: Oneshot :yellow_heart: . You should fucking buy it play it. Who does gets Meros Premium' },
                 { name: '/chair', value: 'A nice chair' },
+                { name: '\u200B', value: '\u200B' },
+                { name: 'Context Menu', value: 'You get to these commands by right clicking a person and picking Apps' },
+                { name: 'Update Qoute game', value: 'Updates the qoute game. Qoutes are split by the first `-` that appears in a message. So please fix any if you got any mistakes ' },
                 { name: '\u200B', value: '\u200B' },
             )
             .setTimestamp()
