@@ -88,5 +88,5 @@ function CheckPreference(id) {
 }
 
 function isEmptyOrSpaces(str){
-    return Boolean(str.trim());
+    return !Boolean(str.trim());
 }
