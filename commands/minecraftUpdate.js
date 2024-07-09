@@ -2,7 +2,7 @@ const { SlashCommandBuilder, inlineCode } = require('discord.js');
 const fs = require('fs');
 const path = require('path');
 
-const pathToMinecraftData = path.join(process.env.DATA_DIRECTORY, 'minecraftUpdatesData.json');
+const pathToMinecraftData = path.join(__dirname, '..', 'assets', 'minecraftUpdatesData.json');
 
 module.exports = {
 	data: new SlashCommandBuilder()
