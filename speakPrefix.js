@@ -5,9 +5,7 @@ const gTTS = require('gtts');
 const path = require('path');
 const fs = require('fs');
 
-const { pathToUserData } = require('./config.json');
-const pathData = path.join(__dirname, pathToUserData);
-
+const pathUserData = path.join(process.env.DATA_DIRECTORY, 'userData.json');
 let leaveTimer = null;
 
 // eslint-disable-next-line no-unused-vars
@@ -69,7 +67,7 @@ module.exports = {
 };
 
 function CheckPreference(id) {
-	const rawdata = fs.readFileSync(pathData);
+	const rawdata = fs.readFileSync(pathUserData);
 	const userData = JSON.parse(rawdata);
 	if (!userData[id]) {
 
@@ -77,7 +75,7 @@ function CheckPreference(id) {
 			ttsLanguage: 'en',
 		};
 
-		fs.writeFile(pathData, JSON.stringify (userData, null, 4), err => {
+		fs.writeFile(pathUserData, JSON.stringify (userData, null, 4), err => {
 			if (err) throw err;
 			console.log('Sucesfully updated ', id, 'preference');
 		});

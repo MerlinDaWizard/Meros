@@ -1,7 +1,8 @@
 const { SlashCommandBuilder } = require('discord.js');
 const fs = require('fs');
-const { pathToGuildData } = require('../config.json');
 const path = require('path');
+
+const pathToGuildData = path.join(process.env.DATA_DIRECTORY, 'guildData.json');
 
 module.exports = {
 	data: new SlashCommandBuilder()
@@ -12,8 +13,7 @@ module.exports = {
 				.setDescription('What should the message start with.')
 				.setRequired(true)),
 	async execute(interaction) {
-		const pathToFile = path.join(__dirname, '..', pathToGuildData);
-		const rawdata = fs.readFileSync(pathToFile);
+		const rawdata = fs.readFileSync(pathToGuildData);
 		const dataJson = JSON.parse(rawdata);
 		
 		const guildID = interaction.guild.id;
@@ -23,7 +23,7 @@ module.exports = {
 			prefix: guildPrefix,
 		};
 
-		fs.writeFile(pathToFile, JSON.stringify (dataJson, null, 4), err => {
+		fs.writeFile(pathToGuildData, JSON.stringify (dataJson, null, 4), err => {
 			if (err) throw err;
 			console.log('Sucesfully updated ', guildID);
 		});

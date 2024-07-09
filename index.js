@@ -1,9 +1,9 @@
+require('dotenv').config();
 // https://discord.com/api/oauth2/authorize?client_id=1015327355725680660&permissions=8&redirect_uri=https%3A%2F%2Fdiscordapp.com%2Foauth2%2Fauthorize%3F%26client_id%3D1015327355725680660%26scope%3Dbot&response_type=code&scope=bot%20messages.read%20guilds.join%20guilds%20guilds.members.read%20applications.commands%20voice
 const fs = require('node:fs');
 const path = require('node:path');
 const { Client, Collection, GatewayIntentBits, ActivityType } = require('discord.js');
 const { generateDependencyReport } = require('@discordjs/voice');
-const { token } = require('./config.json');
 const { execute } = require('./commands/speak');
 
 const client = new Client({ intents: [GatewayIntentBits.Guilds, GatewayIntentBits.GuildMessages, GatewayIntentBits.MessageContent, GatewayIntentBits.GuildMembers, GatewayIntentBits.GuildVoiceStates] });
@@ -59,14 +59,14 @@ client.on('messageCreate', async message => {
 
     const args = message.content.slice(extra_length+prefix.length).trim();
 
-	message.channel.send('You typed: ' + args);
+	// message.channel.send('You typed: ' + args);
 	const speak = require('./speakPrefix.js');
 	speak.func(message, args);
 
 });
 
 
-client.login(token);
+client.login(process.env.DISCORD_TOKEN);
 
 function get_prefix(message) {
 	const { pathToGuildData } = require('./config.json');

@@ -6,8 +6,9 @@ const { createAudioPlayer, joinVoiceChannel, AudioPlayerStatus, NoSubscriberBeha
 // const path = require('path');
 // const fs = require('fs');
 const axios = require('axios');
-const { uberDuckAPIPublic, uberDuckAPISecret } = require('../config.json');
-const {createReadStream } = require('fs')
+const uberDuckAPIPublic = process.env.UBERDUCK_API_PUBLIC_KEY;
+const uberDuckAPISecret = process.env.UBERDUCK_API_SECRET_KEY;
+
 let leaveTimer = null;
 
 module.exports = {

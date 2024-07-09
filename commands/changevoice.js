@@ -1,7 +1,8 @@
 const { SlashCommandBuilder } = require('discord.js');
 const fs = require('fs');
-const { pathToUserData } = require('../config.json');
 const path = require('path');
+
+const pathUserData = path.join(process.env.DATA_DIRECTORY, 'userData.json');
 
 module.exports = {
 	data: new SlashCommandBuilder()
@@ -38,8 +39,7 @@ module.exports = {
                     { name: 'Welsh', value: 'cy' },
 				)),
 	async execute(interaction) {
-		const pathToFile = path.join(__dirname, '..', pathToUserData);
-		const rawdata = fs.readFileSync(pathToFile);
+		const rawdata = fs.readFileSync(pathUserData);
 		const dataJson = JSON.parse(rawdata);
 		
 		const memberID = interaction.member.id;
@@ -49,7 +49,7 @@ module.exports = {
 			ttsLanguage: memberPreference,
 		};
 
-		fs.writeFile(pathToFile, JSON.stringify (dataJson, null, 4), err => {
+		fs.writeFile(pathUserData, JSON.stringify (dataJson, null, 4), err => {
 			if (err) throw err;
 			console.log('Sucesfully updated ', memberID);
 		});

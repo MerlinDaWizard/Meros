@@ -2,9 +2,9 @@ const { ContextMenuCommandBuilder, ApplicationCommandType } = require('discord.j
 
 const fs = require('fs');
 const path = require('path');
-const { pathToQouteData } = require('../config.json');
-const pathData = path.join(__dirname, '..', pathToQouteData);
-const rawdata = fs.readFileSync(pathData);
+
+const pathToQouteData = path.join(process.env.DATA_DIRECTORY, 'qouteData.json');
+const rawdata = fs.readFileSync(pathToQouteData);
 const dataJson = JSON.parse(rawdata);
 
 module.exports = {
@@ -86,7 +86,7 @@ module.exports = {
         };
     });
 
-    fs.writeFile(pathData, JSON.stringify (dataJson, null, 2), err => {
+    fs.writeFile(pathToQouteData, JSON.stringify (dataJson, null, 2), err => {
         if (err) throw err;
         console.log('Sucesfully updated ');
     });

@@ -2,10 +2,10 @@ const { SlashCommandBuilder, ActionRowBuilder, ButtonBuilder, ButtonStyle, Embed
 
 const fs = require('fs');
 const path = require('path');
-const { pathToQouteData } = require('../config.json');
 const stringSimilarity = require('string-similarity');
-const pathData = path.join(__dirname, '..', pathToQouteData);
-const rawdata = fs.readFileSync(pathData);
+
+const pathToQouteData = path.join(process.env.DATA_DIRECTORY, 'qouteData.json');
+const rawdata = fs.readFileSync(pathToQouteData);
 const dataJson = JSON.parse(rawdata);
 
 module.exports = {

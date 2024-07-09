@@ -5,9 +5,9 @@ const { createAudioPlayer, joinVoiceChannel, AudioPlayerStatus, NoSubscriberBeha
 const gTTS = require('gtts');
 const path = require('path');
 const fs = require('fs');
-const {createReadStream } = require('fs')
+const {createReadStream } = require('fs');
 
-const pathData = path.join(__dirname, '..', 'data', 'cricket.mp3');
+const pathData = path.join(__dirname, '..', 'assets', 'cricket.mp3');
 
 let leaveTimer = null;
 
