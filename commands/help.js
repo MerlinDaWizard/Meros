@@ -46,9 +46,8 @@ module.exports = {
 		.setDescription('Tells about my features!'),
 	async execute(interaction) {
 
-        const { pathToGuildData } = require('../config.json');
-        const pathData = path.join(__dirname, '..', pathToGuildData);
-        const rawdata = fs.readFileSync(pathData);
+        const pathToGuildData = path.join(process.env.DATA_DIRECTORY, 'guildData.json');
+        const rawdata = fs.readFileSync(pathToGuildData);
         const userData = JSON.parse(rawdata);
         const prefix = userData[interaction.guildId].prefix;
 

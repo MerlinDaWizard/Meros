@@ -69,9 +69,8 @@ client.on('messageCreate', async message => {
 client.login(process.env.DISCORD_TOKEN);
 
 function get_prefix(message) {
-	const { pathToGuildData } = require('./config.json');
-	const pathData = path.join(__dirname, pathToGuildData);
-	const rawdata = fs.readFileSync(pathData);
+	const pathToGuildData = path.join(process.env.DATA_DIRECTORY, 'guildData.json');
+	const rawdata = fs.readFileSync(pathToGuildData);
 	const userData = JSON.parse(rawdata);
 	if (!userData[message.guildId]) {
 		set_prefix(message.guildId);
@@ -80,16 +79,15 @@ function get_prefix(message) {
 }
 
 function set_prefix(guildID) {
-	const { pathToGuildData } = require('./config.json');
-	const pathToFile = path.join(__dirname, pathToGuildData);
-	const rawdata = fs.readFileSync(pathToFile);
+	const pathToGuildData = path.join(process.env.DATA_DIRECTORY, 'guildData.json');
+	const rawdata = fs.readFileSync(pathToGuildData);
 	const dataJson = JSON.parse(rawdata);
 
 	dataJson[guildID] = {
 		prefix: '-',
 	};
 
-	fs.writeFile(pathToFile, JSON.stringify (dataJson, null, 4), err => {
+	fs.writeFile(pathToGuildData, JSON.stringify (dataJson, null, 4), err => {
 		if (err) throw err;
 		console.log('Sucesfully updated ', guildID);
 	});

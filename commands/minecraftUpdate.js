@@ -1,7 +1,8 @@
 const { SlashCommandBuilder, inlineCode } = require('discord.js');
 const fs = require('fs');
-const { pathToMinecraftData } = require('../config.json');
 const path = require('path');
+
+const pathToMinecraftData = path.join(process.env.DATA_DIRECTORY, 'minecraftUpdatesData.json');
 
 module.exports = {
 	data: new SlashCommandBuilder()
@@ -12,7 +13,7 @@ module.exports = {
 				.setDescription('What specific update?')
 				.setRequired(true)),
 	async execute(interaction) {
-		const dataJson = JSON.parse(fs.readFileSync(path.join(__dirname, '..', pathToMinecraftData)));
+		const dataJson = JSON.parse(fs.readFileSync(pathToMinecraftData));
 		
 
 		const inputUpdate = interaction.options.getString('update');
