@@ -8,12 +8,13 @@ import {
 import gTTS from 'gtts';
 import { UserPreferences } from '../services/UserPreferences';
 import { Readable } from 'stream';
+import { VoiceConnectionManager } from '../managers/voiceConnectionManager';
 
 @Discord()
-export class SpeakWildcardCommand {
+export class SpeakPrefixCommand {
   @SimpleCommand({
     description: 'The speak command, but not a slash command',
-    aliases: ['*'],
+    aliases: ['s'],
   })
   async speakPrefix(command: SimpleCommandMessage): Promise<void> {
     const { message, argString } = command;
@@ -29,31 +30,23 @@ export class SpeakWildcardCommand {
       await message.reply('Join a voice channel first.');
       return;
     }
-
     const voiceChannel = member.voice.channel;
 
-    const preferredVoice = UserPreferences.getVoice(message.author.id) ?? 'en';
+    let connectionData;
+    try {
+      connectionData = await VoiceConnectionManager.joinChannel(voiceChannel);
+    }
+ catch (error) {
+      await message.reply('Failed to join your voice channel.');
+      return;
+    }
 
-    const gtts = new gTTS(text, preferredVoice);
-
-    const connection = joinVoiceChannel({
-      channelId: voiceChannel.id,
-      guildId: voiceChannel.guild.id,
-      adapterCreator: voiceChannel.guild.voiceAdapterCreator,
-    });
-
-    const audioPlayer = createAudioPlayer();
+    const voice = UserPreferences.getVoice(member.user.id) ?? 'en';
+    const gtts = new gTTS(text, voice);
     const resource = createAudioResource(gtts.stream() as Readable);
 
-    audioPlayer.on(AudioPlayerStatus.Playing, () => {
-      console.log('Speaking:', text);
-    });
+    connectionData.player.play(resource);
 
-    audioPlayer.on('error', (e) => console.error(e));
-
-    connection.subscribe(audioPlayer);
-    audioPlayer.play(resource);
-
-    await message.reply(`Speaking using voice \`${preferredVoice}\`: ${text}`);
+    await message.reply(`${member.user.username}: \`${text}\``);
   }
 }
