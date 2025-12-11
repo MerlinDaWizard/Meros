@@ -15,8 +15,8 @@ import {
   type CommandInteraction,
 } from 'discord.js';
 import { Discord, Slash, SlashChoice, SlashOption } from 'discordx';
-import { VoiceConnectionManager } from '../managers/voiceConnectionManager';
-import { UserPreferences } from '../services/UserPreferences';
+import { VoiceConnectionManager } from '../managers/voiceConnectionManager.js';
+import { UserPreferences } from '../services/UserPreferences.js';
 
 @Discord()
 export class SpeakSlashCommand {

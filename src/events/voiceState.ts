@@ -11,7 +11,7 @@ import {
   VoiceChannel,
 } from 'discord.js';
 import { ArgsOf, Discord, On } from 'discordx';
-import { VoiceConnectionManager } from '../managers/voiceConnectionManager';
+import { VoiceConnectionManager } from '../managers/voiceConnectionManager.js';
 
 @Discord()
 export class VoiceStateHandler {

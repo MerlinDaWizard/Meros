@@ -6,7 +6,7 @@ import {
   type StringSelectMenuInteraction,
 } from 'discord.js';
 import { Discord, SelectMenuComponent, Slash } from 'discordx';
-import { UserPreferences } from '../services/UserPreferences';
+import { UserPreferences } from '../services/UserPreferences.js';
 
 export const VOICE_CHOICES = [
   { label: 'Afrikaans', value: 'af' },

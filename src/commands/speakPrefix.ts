@@ -6,9 +6,9 @@ import {
   AudioPlayerStatus,
 } from '@discordjs/voice';
 import gTTS from 'gtts';
-import { UserPreferences } from '../services/UserPreferences';
 import { Readable } from 'stream';
-import { VoiceConnectionManager } from '../managers/voiceConnectionManager';
+import { UserPreferences } from '../services/UserPreferences.js';
+import { VoiceConnectionManager } from '../managers/voiceConnectionManager.js';
 
 @Discord()
 export class SpeakPrefixCommand {
