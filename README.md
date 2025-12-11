@@ -3,6 +3,15 @@
 A discord bot built with Discordx.
 Built for personal use in a personal discord server.
 
+## 🌲 Enviroment
+
+Poplate enviroment or .env file with
+
+```
+BOT_TOKEN={Discord Bot Token}
+THE_CREATORS_ID={Discord user id for secret relay command}
+```
+
 ## 🏗 Development
 
 ```
