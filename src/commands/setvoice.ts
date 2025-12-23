@@ -72,7 +72,7 @@ export class SetVoiceCommand {
       return;
     }
 
-    UserPreferences.setVoice(interaction.user.id, voiceValue);
+    await UserPreferences.setVoice(interaction.user.id, voiceValue);
 
     await interaction.message.edit({
       content: `You have selected voice: \`${match.label}\``,

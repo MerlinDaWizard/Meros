@@ -7,6 +7,7 @@ import {
 } from 'discord.js';
 import { Client } from 'discordx';
 import dotenv from 'dotenv';
+import { migrateToLatest } from './migrate.js'
 
 export const bot = new Client({
   // To use only guild command
@@ -64,7 +65,9 @@ async function run() {
   //
   // await importx(__dirname + '/{events,commands}/**/*.{ts,js}');
 
-  dotenv.config();
+  // I dont like the dotenvx promo
+  dotenv.config({ quiet: true });
+  await migrateToLatest();
 
   // The following syntax should be used in the ECMAScript environment
   await importx(`${dirname(import.meta.url)}/{events,commands}/**/*.{ts,js}`);

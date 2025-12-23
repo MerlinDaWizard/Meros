@@ -7,13 +7,20 @@ WORKDIR /tmp/app
 # Move package.json
 COPY package.json .
 
+ENV DATABASE_URL="devdb.sqlite"
+
 # Install dependencies
 RUN npm install
 
 # Move source files
 COPY src ./src
 COPY tsconfig.json   .
+COPY kysely.config.ts .
 
+# Run migrations to create empty dev db
+RUN npm run migrate
+# Build typescript model for database from empty dev instead of prod
+RUN npm run codegen
 # Build project
 RUN npm run build
 

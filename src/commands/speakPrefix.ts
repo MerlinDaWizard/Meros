@@ -36,12 +36,12 @@ export class SpeakPrefixCommand {
     try {
       connectionData = await VoiceConnectionManager.joinChannel(voiceChannel);
     }
- catch (error) {
+    catch (error) {
       await message.reply('Failed to join your voice channel.');
       return;
     }
 
-    const voice = UserPreferences.getVoice(member.user.id) ?? 'en';
+    const voice = await UserPreferences.getVoice(member.user.id) ?? 'en';
     const gtts = new gTTS(text, voice);
     const resource = createAudioResource(gtts.stream() as Readable);
 

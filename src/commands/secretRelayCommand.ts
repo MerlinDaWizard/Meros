@@ -1,8 +1,6 @@
 import { Client, Discord, SimpleCommand, SimpleCommandMessage } from 'discordx';
 import { ChannelType, TextChannel } from 'discord.js';
 
-const OWNER_ID = 'YOUR_DISCORD_USER_ID_HERE';
-
 @Discord()
 export class SecretRelayCommand {
   @SimpleCommand({ directMessage: true })

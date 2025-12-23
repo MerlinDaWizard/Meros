@@ -3,5 +3,11 @@ services:
     build: .
     command: node build/main.js
     environment:
-      - BOT_TOKEN=${BOT_TOKEN}
-      - THE_CREATORS_ID=${THE_CREATORS_ID}
+      BOT_TOKEN: ${BOT_TOKEN}
+      THE_CREATORS_ID: ${THE_CREATORS_ID}
+      DATABASE_URL: /app/data/db.sqlite
+    volumes:
+      - sqlite_db:/app/data
+volumes:
+  sqlite_db:
+

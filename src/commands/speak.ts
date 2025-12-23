@@ -53,12 +53,12 @@ export class SpeakSlashCommand {
     try {
       connectionData = await VoiceConnectionManager.joinChannel(voiceChannel);
     }
- catch (error) {
+    catch (error) {
       await interaction.editReply('Failed to join your voice channel.');
       return;
     }
 
-    const voice = UserPreferences.getVoice(interaction.user.id) ?? 'en';
+    const voice = await UserPreferences.getVoice(interaction.user.id) ?? 'en';
     const gtts = new gTTS(text, voice);
     const resource = createAudioResource(gtts.stream() as Readable);
 
