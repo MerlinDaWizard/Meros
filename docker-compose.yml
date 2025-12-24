@@ -6,6 +6,7 @@ services:
       BOT_TOKEN: ${BOT_TOKEN}
       THE_CREATORS_ID: ${THE_CREATORS_ID}
       DATABASE_URL: /app/data/db.sqlite
+      TTS_PREFIX: '!'
     volumes:
       - sqlite_db:/app/data
 volumes:
