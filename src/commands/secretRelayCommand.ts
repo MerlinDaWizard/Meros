@@ -1,5 +1,6 @@
 import { Client, Discord, SimpleCommand, SimpleCommandMessage } from 'discordx';
 import { ChannelType, TextChannel } from 'discord.js';
+import { config } from '../config.js'
 
 @Discord()
 export class SecretRelayCommand {
@@ -7,7 +8,7 @@ export class SecretRelayCommand {
   async sayToChannel(command: SimpleCommandMessage, client: Client) {
     if (
       command.message.channel.type !== ChannelType.DM ||
-      command.message.author.id !== process.env.THE_CREATORS_ID
+      command.message.author.id !== config.creatorId
     ) {
       return;
     }
@@ -54,7 +55,7 @@ export class SecretRelayCommand {
         `Message sent to <#${channelId}> successfully!`,
       );
     }
- catch (error) {
+    catch (error) {
       console.error(error);
       await command.message.channel.send(
         'Failed to send message. Check channel ID and bot permissions.',

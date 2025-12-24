@@ -6,7 +6,7 @@ import {
   type Message,
 } from 'discord.js';
 import { Client } from 'discordx';
-import dotenv from 'dotenv';
+import { config } from './config.js';
 import { migrateToLatest } from './migrate.js'
 
 export const bot = new Client({
@@ -32,7 +32,7 @@ export const bot = new Client({
 
   // Configuration for @SimpleCommand
   simpleCommand: {
-    prefix: '!',
+    prefix: config.prefix,
   },
 });
 
@@ -65,20 +65,14 @@ async function run() {
   //
   // await importx(__dirname + '/{events,commands}/**/*.{ts,js}');
 
-  // I dont like the dotenvx promo
-  dotenv.config({ quiet: true });
   await migrateToLatest();
 
   // The following syntax should be used in the ECMAScript environment
   await importx(`${dirname(import.meta.url)}/{events,commands}/**/*.{ts,js}`);
 
   // Let's start the bot
-  if (!process.env.BOT_TOKEN) {
-    throw Error('Could not find BOT_TOKEN in your environment');
-  }
-
   // Log in with your bot token
-  await bot.login(process.env.BOT_TOKEN);
+  await bot.login(config.botToken);
 }
 
 void run();

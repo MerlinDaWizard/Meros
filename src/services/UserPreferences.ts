@@ -1,14 +1,16 @@
 import { db } from '../database.js'
 
+const DEFAULT_VOICE = "en";
+
 export class UserPreferences {
-  static async getVoice(userId: string): Promise<string | null> {
+  static async getVoice(userId: string): Promise<string> {
     const row = await db
       .selectFrom('user_preferences')
       .where('user_id', '=', userId)
       .select('voice')
       .executeTakeFirst()
 
-    return row?.voice ?? null
+    return row?.voice ?? DEFAULT_VOICE
   }
 
   static async setVoice(

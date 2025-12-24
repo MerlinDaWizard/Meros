@@ -1,14 +1,12 @@
 import {
   AudioPlayer,
-  AudioPlayerStatus,
   createAudioPlayer,
-  createAudioResource,
   joinVoiceChannel,
   VoiceConnection,
   VoiceConnectionStatus,
   entersState,
 } from '@discordjs/voice';
-import { VoiceBasedChannel, Guild, GuildMember } from 'discord.js';
+import { Guild, VoiceBasedChannel } from 'discord.js';
 
 interface ConnectionData {
   connection: VoiceConnection;
@@ -18,34 +16,35 @@ interface ConnectionData {
 }
 
 export class VoiceConnectionManager {
+  // previously a map of channelid -> conn data
+  // now guild id -> conn data
   private static connections = new Map<string, ConnectionData>();
 
   static async joinChannel(channel: VoiceBasedChannel) {
-    const channelId = channel.id;
-
-    const existingData = this.connections.get(channelId);
+    const existingData = this.connections.get(channel.guildId);
 
     if (existingData) {
       const status = existingData.connection.state.status;
 
       if (
         status != VoiceConnectionStatus.Destroyed &&
-        status != VoiceConnectionStatus.Disconnected
+        status != VoiceConnectionStatus.Disconnected &&
+        existingData.channelId == channel.id
       ) {
         return existingData;
       }
 
       try {
-        await existingData.connection.destroy();
+        existingData.connection.destroy();
       }
- catch (e) {
+      catch (e) {
         console.warn('Error destroying old connection:', e);
       }
-      this.connections.delete(channelId);
+      this.connections.delete(channel.guildId);
     }
 
     const connection = joinVoiceChannel({
-      channelId: channelId,
+      channelId: channel.id,
       guildId: channel.guild.id,
       adapterCreator: channel.guild.voiceAdapterCreator,
     });
@@ -53,7 +52,7 @@ export class VoiceConnectionManager {
     try {
       await entersState(connection, VoiceConnectionStatus.Ready, 10_000);
     }
- catch {
+    catch {
       connection.destroy();
       throw new Error('Failed to connect to the voice channel.');
     }
@@ -62,36 +61,36 @@ export class VoiceConnectionManager {
 
     connection.subscribe(player);
 
-    this.connections.set(channelId, {
+    this.connections.set(channel.guildId, {
       connection,
       player,
       channelId: channel.id,
     });
 
-    return this.connections.get(channelId)!;
+    return this.connections.get(channel.guildId)!;
   }
 
-  static async leaveChannel(channelId: string) {
-    const data = this.connections.get(channelId);
+  static async leaveChannel(guildId: string) {
+    const data = this.connections.get(guildId);
     if (!data) return;
 
     if (data.disconnectTimeout) clearTimeout(data.disconnectTimeout);
     data.connection.destroy();
-    this.connections.delete(channelId);
+    this.connections.delete(guildId);
   }
 
   static scheduleDisconnect(channel: VoiceBasedChannel) {
-    const data = this.connections.get(channel.id);
-    if (!data) {
+    const data = this.connections.get(channel.guildId);
+    if (!data || data.channelId != channel.id) {
       return;
     }
 
     if (!data.disconnectTimeout) {
       data.disconnectTimeout = setTimeout(() => {
-        this.leaveChannel(channel.id);
+        this.leaveChannel(channel.guildId);
       }, 60_000);
     }
- else if (data.disconnectTimeout) {
+    else if (data.disconnectTimeout) {
       clearTimeout(data.disconnectTimeout);
       data.disconnectTimeout = undefined;
     }
